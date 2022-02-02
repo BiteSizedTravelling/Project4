@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import LoadingAnimation from '../components/LoadingAnimation.js';
 import RestaurantItemsMap from "../components/RestaurantItemsMap.js";
+import axios from 'axios'; 
 
 //Funtion that contains yelp api call and renders info on the page. 
 function RestaurantSearchPage() {
@@ -9,35 +10,31 @@ function RestaurantSearchPage() {
   const [userInput, setUserInput] = useState('');
   const YELPAPICall = () => {
     
-      const proxiedUrl = 'https://api.yelp.com/v3/businesses/search';
-      const url = new URL('https://proxy.hackeryou.com');
-  
-    url.search = new URLSearchParams({
-      reqUrl: proxiedUrl,
-      'params[term]': 'Restuarant',
-      'params[location]': `${userInput}`,
-      'proxyHeaders[Authorization]': 'Bearer SH6cIaiOu4yFDQ9M6w-8GGkgwaEdtzV1HmQ461hIForr3PDqa-_AwLRfvIkPqrDYKuSvAh9YRLkMSf2BsVEswIWTOGDwrnzM18PA8DEr6elO4j3eBDNqZGixXUbrYXYx',
-    });
+    axios({
+      method: "GET",
+      url: ` https://api.yelp.com/v3/businesses/search`,
+      responseType: "json",
+      params: {
+        term: "Restuarant",
+        location: `Berlin`,
+      },
+
+      headers: {
+'Authorization' :'Bearer SH6cIaiOu4yFDQ9M6w-8GGkgwaEdtzV1HmQ461hIForr3PDqa-_AwLRfvIkPqrDYKuSvAh9YRLkMSf2BsVEswIWTOGDwrnzM18PA8DEr6elO4j3eBDNqZGixXUbrYXYx',
+      }
+      
+    }).then((jsonResponse) => {
+            
+    if (jsonResponse.length !== 0) {
+      setRestaurantItem(jsonResponse.businesses);
+    }
+      
+    })
     
-    fetch(url)
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          throw new Error(res.statusText);
-        }
-      })
-      .then(data => {
-        setRestaurantItem(data.businesses);
-      }).catch((err) => {
-        //Api error handling. 
-        if (err.message === "Not Found") {
-          alert("Something went wrong.");
-        } else {
-          alert("Please try again.");
-        }
-      })
+  
   }
+    
+
     
   const RenderAPICall = () => {
     //Conditional rendering of api call.
