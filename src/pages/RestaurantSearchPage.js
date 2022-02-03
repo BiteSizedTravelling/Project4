@@ -14,7 +14,7 @@ function RestaurantSearchPage() {
   
     url.search = new URLSearchParams({
       reqUrl: proxiedUrl,
-      'params[term]': 'Restuarant',
+      'params[term]': 'Restaurant',
       'params[location]': `${userInput}`,
       'proxyHeaders[Authorization]': 'Bearer SH6cIaiOu4yFDQ9M6w-8GGkgwaEdtzV1HmQ461hIForr3PDqa-_AwLRfvIkPqrDYKuSvAh9YRLkMSf2BsVEswIWTOGDwrnzM18PA8DEr6elO4j3eBDNqZGixXUbrYXYx',
     });
