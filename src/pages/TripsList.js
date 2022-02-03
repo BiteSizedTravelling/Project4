@@ -1,5 +1,5 @@
 import RealtimeDb from "../firebase/RealtimeDb";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import firebase from "../firebase/Firebase";
 import { getDatabase, onValue, ref, remove } from "firebase/database";
 
@@ -14,6 +14,8 @@ const TripsList = () => {
   const [removeTripState, setRemoveTripState] = useState(false);
   const [prompt, setPrompt] = useState(false);
   const [errorFirebase, setErrorFirebase] = useState(false); 
+  const AudioThemeRef = useRef();
+  const VideoRef = useRef();
 
   //Click handler for saved restaurants for saved trips page. 
   const buttonClickedValue = (event) => {
@@ -114,33 +116,31 @@ const TripsList = () => {
 
   //Rick roll
   const rickMe = () =>{
- 
-    let video = document.getElementById('RickMe');
     
     if (videoMenu === true) { 
-      video.volume = 1; 
-      video.pause(); 
+      VideoRef.current.volume = 1; 
+      VideoRef.current.pause(); 
    
     }
 
     else {
-      video.volume = 1; 
-      video.play();
+      VideoRef.current.volume = 1; 
+      VideoRef.current.play();
     }
       setVideoMenu((videoMenu) => !videoMenu);
- }
+  }
+  
+  //Click Sound on Menu Scroll
  const clickSoundPlay = () => {
     
-    let audio = document.getElementById('beep');
-    audio.volume = 0.5; 
-    audio.play();
-    audio.currentTime=0;
+    AudioThemeRef.current.volume = 0.5; 
+    AudioThemeRef.current.play();
+    AudioThemeRef.current.currentTime=0;
 
   }
 
   const clickSoundPause = () => {
-    let audio = document.getElementById('beep');
-    audio.pause();
+    AudioThemeRef.current.pause();
 
   }
 
@@ -167,9 +167,9 @@ const TripsList = () => {
         <section className="savedTripsSection">
           <div className="savedTrips-Wrappper">
             {renderFirebaseError()}
-              <video  className={`RickMe${videoMenu ? " show" : " hide"
+              <video ref={VideoRef} className={`RickMe${videoMenu ? " show" : " hide"
                   }`} id="RickMe" src="./Assets/video/RickMe.mp4"></video>
-              <audio id="beep" src="./Assets/beep.mp3"/>
+            <audio ref={AudioThemeRef} id="beep" src="./Assets/beep.mp3"/>
           <div className="TitleContainer">
             <h2>Your Saved Trips!</h2>
           </div>
