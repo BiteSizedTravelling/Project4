@@ -9,17 +9,12 @@ function RestaurantSearchPage() {
   const [userInput, setUserInput] = useState('');
   const YELPAPICall = () => {
     
-      const proxiedUrl = 'https://api.yelp.com/v3/businesses/search';
-      const url = new URL('https://proxy.hackeryou.com');
-  
-    url.search = new URLSearchParams({
-      reqUrl: proxiedUrl,
-      'params[term]': 'Restaurant',
-      'params[location]': `${userInput}`,
-      'proxyHeaders[Authorization]': 'Bearer SH6cIaiOu4yFDQ9M6w-8GGkgwaEdtzV1HmQ461hIForr3PDqa-_AwLRfvIkPqrDYKuSvAh9YRLkMSf2BsVEswIWTOGDwrnzM18PA8DEr6elO4j3eBDNqZGixXUbrYXYx',
-    });
-    
-    fetch(url)
+    fetch(`https://mycorsproxywinner.herokuapp.com/https://api.yelp.com/v3/businesses/search?location=${userInput}&term=Restaurant`, {
+      method: "GET",
+      headers: {"Content-type": "application/json;charset=UTF-8", "Authorization": "Bearer SH6cIaiOu4yFDQ9M6w-8GGkgwaEdtzV1HmQ461hIForr3PDqa-_AwLRfvIkPqrDYKuSvAh9YRLkMSf2BsVEswIWTOGDwrnzM18PA8DEr6elO4j3eBDNqZGixXUbrYXYx"}
+  })
+      
+      
       .then((res) => {
         if (res.ok) {
           return res.json();
