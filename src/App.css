@@ -407,7 +407,7 @@ html[data-theme="Green"] {
   --ThemeColour: darkgreen;
 }
 html[data-theme="Red"] {
-  --ThemeColour: Red;
+  --ThemeColour: #8b0000;
 }
 html[data-theme="Orange"] {
   --ThemeColour: #ff7f00;
@@ -1110,8 +1110,8 @@ h1 {
   top: 60px;
   right: 0;
   width: 500px;
-  bottom: 50px;
-  z-index: 1;
+  bottom: 0px;
+  z-index: 999;
   background-color: rgba(0, 0, 0, 0.8);
 }
 .themeMenuToggle button {
@@ -1135,6 +1135,7 @@ footer {
   align-items: center;
   background-color: var(--ThemeColour);
   color: white;
+  z-index: 999;
 }
 
 .credits a {
